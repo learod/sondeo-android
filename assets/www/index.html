@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, minimum-scale=1, maximum-scale=1" />
+        <title>
+        </title>
+        <link rel="stylesheet" href="jquery.mobile/jquery.mobile-1.0.1.min.css" />
+        <style>
+            /* App custom styles */
+        </style>
+        <script src="js/jquery-1.7.1.min.js">
+        </script>
+        <script src="jquery.mobile/jquery.mobile-1.0.1.min.js">
+        </script>
+        <script src="js/config.js">
+        </script>
+    <body>
+        <div data-role="page" id="page1">
+            <div data-theme="d" data-role="header" data-position="fixed">
+                <h3>
+                    Sondeo
+                </h3>
+            </div>
+            <div data-role="content">
+                <form url="" action="POST">
+                    <span>LOGIN</span>
+                    <div data-role="fieldcontain">
+                        <fieldset data-role="controlgroup">
+                            <label for="username">
+                            </label>
+                            <input id="username" placeholder="Nombre de Usuario" value="" type="text" />
+                        
+                            <label for="password">
+                            </label>
+                            <input id="password" placeholder="Password" value="" type="password" />
+                        </fieldset>
+                    </div>
+                    <input type="submit" data-inline="true" data-icon="plus" data-iconpos="left" value="Login" id="sub" />
+                </form>
+                <div id="resultBlock"></div>
+            </div>
+        </div>
+
+       <script>
+        $(document).ready(function() {
+
+            $("#sub").click(function(e) {
+                e.preventDefault();
+                var url ="http://"+host+":3000/iniciar.json?login="+$("#username").val()+"&password="+$("#password").val();    
+                //$("#resultBlock").html(url); 
+                $.get(url, {}, function(data) {
+                    $("#resultBlock").html(JSON.stringify(data));
+                    
+                });
+                $.mobile.changePage( "app-template.html", { transition: "slideup"} );
+            });
+            
+        });
+        </script>
+    </body>
+</html>
