@@ -2,14 +2,20 @@
  : /home/leandro/NetBeansProjects/sondeo/res/xml/plugins.xml \
 /home/leandro/NetBeansProjects/sondeo/res/xml/phonegap.xml \
 /home/leandro/NetBeansProjects/sondeo/res/layout/main.xml \
+/home/leandro/NetBeansProjects/sondeo/res/drawable/icono_encuesta.png \
 /home/leandro/NetBeansProjects/sondeo/res/values/strings.xml \
+/home/leandro/NetBeansProjects/sondeo/bin/res/drawable/icono_encuesta.png \
 /home/leandro/NetBeansProjects/sondeo/assets/www \
 /home/leandro/NetBeansProjects/sondeo/assets/www/js \
+/home/leandro/NetBeansProjects/sondeo/assets/www/index2.html \
 /home/leandro/NetBeansProjects/sondeo/assets/www/css \
 /home/leandro/NetBeansProjects/sondeo/assets/www/prueba.html \
 /home/leandro/NetBeansProjects/sondeo/assets/www/index.html \
 /home/leandro/NetBeansProjects/sondeo/assets/www/app-template.html \
 /home/leandro/NetBeansProjects/sondeo/assets/www/jquery.mobile \
+/home/leandro/NetBeansProjects/sondeo/assets/www/images \
+/home/leandro/NetBeansProjects/sondeo/assets/www/js/jquery-1.7.1.js \
+/home/leandro/NetBeansProjects/sondeo/assets/www/js/jquery-jsonp-2.2.1.min.js \
 /home/leandro/NetBeansProjects/sondeo/assets/www/js/config.js \
 /home/leandro/NetBeansProjects/sondeo/assets/www/js/jquery-1.7.1.min.js \
 /home/leandro/NetBeansProjects/sondeo/assets/www/js/phonegap-1.4.1.js \
@@ -25,4 +31,6 @@
 /home/leandro/NetBeansProjects/sondeo/assets/www/jquery.mobile/images/ajax-loader.png \
 /home/leandro/NetBeansProjects/sondeo/assets/www/jquery.mobile/images/icons-18-white.png \
 /home/leandro/NetBeansProjects/sondeo/assets/www/jquery.mobile/images/icons-36-white.png \
+/home/leandro/NetBeansProjects/sondeo/assets/www/images/logout.png \
+/home/leandro/NetBeansProjects/sondeo/assets/www/images/login.png \
 /home/leandro/NetBeansProjects/sondeo/AndroidManifest.xml \

@@ -2,5 +2,6 @@
  : /home/leandro/NetBeansProjects/sondeo/res/xml/plugins.xml \
 /home/leandro/NetBeansProjects/sondeo/res/xml/phonegap.xml \
 /home/leandro/NetBeansProjects/sondeo/res/layout/main.xml \
+/home/leandro/NetBeansProjects/sondeo/res/drawable/icono_encuesta.png \
 /home/leandro/NetBeansProjects/sondeo/res/values/strings.xml \
 /home/leandro/NetBeansProjects/sondeo/AndroidManifest.xml \

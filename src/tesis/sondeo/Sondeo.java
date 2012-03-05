@@ -3,7 +3,7 @@ package tesis.sondeo;
 import android.os.Bundle;
 import com.phonegap.DroidGap;
 
-public class MainActivity extends DroidGap
+public class Sondeo extends DroidGap
 {
     /** Called when the activity is first created. */
     @Override

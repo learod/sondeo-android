@@ -8,7 +8,8 @@
         <link rel="stylesheet" href="jquery.mobile/jquery.mobile-1.0.1.min.css" />
         <style>
             /* App custom styles */
-        </style>
+        </style><script src="js/phonegap-1.4.1.js">
+        </script>
         <script src="js/jquery-1.7.1.min.js">
         </script>
         <script src="jquery.mobile/jquery.mobile-1.0.1.min.js">
@@ -24,6 +25,7 @@
             </div>
             <div data-role="content">
                 <form url="" action="POST">
+                    <img src="images/logout.png" width="20px" >
                     <span>LOGIN</span>
                     <div data-role="fieldcontain">
                         <fieldset data-role="controlgroup">
@@ -42,18 +44,227 @@
             </div>
         </div>
 
+        <!-- ACA COMIENZA OTRA PAGINA -->
+        <div data-role="page" id="bienvenido">
+            <div data-theme="a" data-role="header">
+                <h3>
+                    Sondeo
+                </h3>
+                <a data-role="button" data-transition="fade" data-theme="a" data-icon="delete" data-iconpos="left" id="salir">
+                    Salir
+                </a>
+            </div>
+            <div data-role="content">
+                <ul data-role="listview" data-divider-theme="b" data-inset="true">
+                    <li data-role="list-divider" role="heading">
+                        Divider
+                    </li>
+                    <li data-theme="c">
+                        <a href="#" data-transition="slide">
+                            Button
+                        </a>
+                    </li>
+                    <li data-theme="c">
+                        <a href="#page1" data-transition="slide">
+                            Button
+                        </a>
+                    </li>
+                    <li data-theme="c">
+                        <a href="#page1" data-transition="slide">
+                            Button
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <div data-theme="a" data-role="footer">
+                <div data-role="navbar" data-iconpos="top">
+                    <ul>
+                        <li>
+                            <a href="#page1" data-theme="" data-icon="">
+                                Button
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" data-theme="" data-icon="">
+                                Button
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#cambiar_pass" data-theme="" data-icon="">
+                                Contrase&ntilde;a
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" data-theme="" data-icon="gear" class="config">
+                                Config.
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <h3>
+                    <span class="nombre"></span>
+                </h3>
+            </div>
+        </div>
+
+        <!-- Pagina de cambio de contraseña -->
+        <div data-role="page" id="cambiar_pass">
+            <div data-theme="a" data-role="header" data-position="fixed">
+                <h3>
+                    Sondeo
+                </h3>
+                <a data-role="button" data-rel="back" data-transition="fade" data-theme="a" data-icon="back" data-iconpos="left">
+                    Atras
+                </a>
+            </div>
+            <div data-role="content">
+                <form url="" action="POST">
+                    
+                    <span>Cambio de Contrase&ntilde;a</span>
+                    <div data-role="fieldcontain">
+                        <fieldset data-role="controlgroup">
+                            <input id="old_password" placeholder="Contrase&ntilde;a" value="" type="password" />
+                            <br />                        
+                            <input id="nb_password" placeholder="Nueva Contrase&ntilde;a" value="" type="password" />
+                            <br />                        
+                            <input id="con_nb_password" placeholder="Repetir Nueva Contrase&ntilde;a" value="" type="password" />
+                        </fieldset>
+                    </div>
+                    <input type="submit" data-inline="true" data-icon="check" data-iconpos="left" value="Guardar" id="sub" />
+                </form>
+                <div id="resultBlock"></div>
+            </div>
+            <div data-theme="a" data-role="footer">
+                <div data-role="navbar" data-iconpos="top">
+                    <ul>
+                        <li>
+                            <a href="#page1" data-theme="" data-icon="">
+                                Button
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" data-theme="" data-icon="">
+                                Button
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" data-theme="" data-icon="" class="ui-btn-active">
+                                Contrase&ntilde;a
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" data-theme="" data-icon="gear" class="config">
+                                Config.
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <h3>
+                    <span class="nombre"></span>
+                </h3>
+            </div>
+        </div>
+        
        <script>
+       var login=null;
+       var storage = window.localStorage;      
+
+       function iniciar_session() {
+           var url ="http://"+host+"/iniciar.json?login="+$("#username").val()+"&password="+$("#password").val();    
+                $.ajax({
+                      url: url,
+                      timeout: 10000,
+                      type:'get',
+                      beforeSend: function( xhr ) {
+                         $.mobile.showPageLoadingMsg("b", "Cargando...", true);
+                      },
+                      success: function( data ) {
+                        login=data;
+                        if (login.status!='ERROR'){
+                            $(".nombre").html(login.usuario.name);
+                            storage.setItem("username",$("#username").val());
+                            storage.setItem("password",$("#password").val());
+                            storage.setItem("login",JSON.stringify(login));
+                            $.mobile.changePage( "#bienvenido", { transition: "slideup"} );
+                        }else{
+                            alert(login.message);
+                        }
+
+                      },
+                      error: function(){
+                         navigator.notification.alert(
+                            'Imposible conectar con el Servidor!',  // message
+                            null,         // callback
+                            'Error',            // title
+                            'OK'                  // buttonName
+                        );
+                      },
+
+                      complete: function(){
+                        $.mobile.hidePageLoadingMsg();
+                      }
+                    });
+       }
+
+       function alertDismissed(button) {
+        if (button==1) navigator.app.exitApp();
+            // do something
+            //alert('You selected button ' + button);
+        }
+        
+        function cerrar_session(button) {
+            if (button==1) {
+                storage.clear();
+                navigator.app.exitApp();
+            }
+            // do something
+            //alert('You selected button ' + button);
+        }
+        
+
+
+        function salir () {
+             navigator.notification.confirm(
+                '¿Desea Salir?',  // message
+                 alertDismissed,             // callback to invoke with index of button pressed
+                'Sondeo',            // title
+                'OK,Cancelar'          // buttonLabels
+            );
+        }
+
+        function onEndCallKeyDown(){
+            navigator.notification.confirm(
+                '¿Desea Salir?',  // message
+                 cerrar_session,             // callback to invoke with index of button pressed
+                'Sondeo',            // title
+                'OK,Cancelar'          // buttonLabels
+            );
+        }
+
         $(document).ready(function() {
+            //alert(storage.getItem('username') +  ' ' + storage.getItem('password'))
+            //document.addEventListener("menubutton", onEndCallKeyDown, false);
+
+            if(storage.getItem("username") != null && storage.getItem("password") != null){
+                $('#username').val(storage.getItem("username"));
+                $('#password').val(storage.getItem("password"));
+                iniciar_session();
+            }
+
+            login=storage.getItem("login")
+            //if(login!='null'){}
+
+
+            $(".config").click(function(e){
+                onEndCallKeyDown();
+            });
+            $("#salir").click(function(e){
+                salir();               
+            });
 
             $("#sub").click(function(e) {
                 e.preventDefault();
-                var url ="http://"+host+":3000/iniciar.json?login="+$("#username").val()+"&password="+$("#password").val();    
-                //$("#resultBlock").html(url); 
-                $.get(url, {}, function(data) {
-                    $("#resultBlock").html(JSON.stringify(data));
-                    
-                });
-                $.mobile.changePage( "app-template.html", { transition: "slideup"} );
+                iniciar_session();
             });
             
         });
