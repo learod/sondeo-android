@@ -6,6 +6,7 @@
         <title>
         </title>
         <link rel="stylesheet" href="jquery.mobile/jquery.mobile-1.0.1.min.css" />
+        <link rel="stylesheet" href="css/visualize.css" />
         <style>
             /* App custom styles */
         </style><script src="js/phonegap-1.4.1.js">
@@ -16,8 +17,13 @@
         </script>
         <script src="js/config.js">
         </script>
+        <script src="js/wz_jsgraphics.js">
+        </script>
+        <script src="js/pie.js">
+        </script>
+
     <body>
-        <div data-role="page" id="page1">
+        <div data-role="page" id="login">
             <div data-theme="d" data-role="header" data-position="fixed">
                 <h3>
                     Sondeo
@@ -55,7 +61,7 @@
                 </a>
             </div>
             <div data-role="content">
-                <ul data-role="listview" data-divider-theme="b" data-inset="true">
+                <!--ul data-role="listview" data-divider-theme="b" data-inset="true">
                     <li data-role="list-divider" role="heading">
                         Divider
                     </li>
@@ -74,28 +80,36 @@
                             Button
                         </a>
                     </li>
-                </ul>
+                </ul-->
+
+
+               <div id="pieCanvas"></div>
+
+
+
+
+
             </div>
             <div data-theme="a" data-role="footer">
                 <div data-role="navbar" data-iconpos="top">
                     <ul>
                         <li>
-                            <a href="#page1" data-theme="" data-icon="">
-                                Button
+                            <a href="#bienvenido" data-theme="" data-icon="myhome" class="ui-btn-active">
+                                Inicio
                             </a>
                         </li>
                         <li>
-                            <a href="#" data-theme="" data-icon="">
-                                Button
+                            <a href="#" data-theme="" data-icon="grid" data-transition="pop">
+                                Menu
                             </a>
                         </li>
                         <li>
-                            <a href="#cambiar_pass" data-theme="" data-icon="">
+                            <a href="#cambiar_pass" data-theme="" data-icon="padlock" data-transition="pop">
                                 Contrase&ntilde;a
                             </a>
                         </li>
                         <li>
-                            <a href="#" data-theme="" data-icon="gear" class="config">
+                            <a href="#" data-theme="" data-icon="tools" class="config" data-transition="pop">
                                 Config.
                             </a>
                         </li>
@@ -130,7 +144,7 @@
                             <input id="con_nb_password" placeholder="Repetir Nueva Contrase&ntilde;a" value="" type="password" />
                         </fieldset>
                     </div>
-                    <input type="submit" data-inline="true" data-icon="check" data-iconpos="left" value="Guardar" id="sub" />
+                    <input type="submit" data-inline="true" data-icon="check" data-iconpos="left" value="Guardar" id="g_pass" />
                 </form>
                 <div id="resultBlock"></div>
             </div>
@@ -138,22 +152,22 @@
                 <div data-role="navbar" data-iconpos="top">
                     <ul>
                         <li>
-                            <a href="#page1" data-theme="" data-icon="">
-                                Button
+                            <a href="#bienvenido" data-theme="" data-icon="myhome" data-transition="pop">
+                                Inicio
                             </a>
                         </li>
                         <li>
-                            <a href="#" data-theme="" data-icon="">
-                                Button
+                            <a href="#" data-theme="" data-icon="grid" data-transition="pop">
+                                Menu
                             </a>
                         </li>
                         <li>
-                            <a href="#" data-theme="" data-icon="" class="ui-btn-active">
+                            <a href="#" data-theme="" data-icon="padlock" class="ui-btn-active">
                                 Contrase&ntilde;a
                             </a>
                         </li>
                         <li>
-                            <a href="#" data-theme="" data-icon="gear" class="config">
+                            <a href="#" data-theme="" data-icon="tools" class="config" data-transition="pop">
                                 Config.
                             </a>
                         </li>
@@ -166,6 +180,17 @@
         </div>
         
        <script>
+
+       var p = new pie();
+        p.add("Jan",100);
+        p.add("Feb",200);
+        p.add("Mar",150);
+        p.add("Apr",120);
+        p.add("May",315);
+        p.add("Jun",415);
+        p.add("Jul",315);
+        p.render("pieCanvas", "Pie Graph")
+
        var login=null;
        var storage = window.localStorage;      
 
@@ -244,6 +269,17 @@
         $(document).ready(function() {
             //alert(storage.getItem('username') +  ' ' + storage.getItem('password'))
             //document.addEventListener("menubutton", onEndCallKeyDown, false);
+            $('.pie').hide();
+            // $('.pie').visualize({
+            //         type: 'pie',
+            //         width: 200,
+            //         appendKey: false,
+            //         appendTitle: false,
+            //         //pieMargin: 10,
+            //         title: '2009 Total Sales by Individual'
+            //         //interaction: true,
+            //         //tooltip: true
+            //     });
 
             if(storage.getItem("username") != null && storage.getItem("password") != null){
                 $('#username').val(storage.getItem("username"));
@@ -258,8 +294,45 @@
             $(".config").click(function(e){
                 onEndCallKeyDown();
             });
+
             $("#salir").click(function(e){
                 salir();               
+            });
+
+            $("#g_pass").click(function(e){
+                e.preventDefault();
+                var url ="http://"+host+"/users/cambiar_pass.json";    
+                $.ajax({
+                  url: url,
+                  data:{'n_pass':$('#nb_password').val(),'cn_pass':$('#con_nb_password').val(),
+                        'password':$("#old_password").val(),'login':storage.getItem('username'),'id':login.usuario.id},
+                  timeout: 10000,
+                  type:'POST',
+                  beforeSend: function( xhr ) {
+                     $.mobile.showPageLoadingMsg("b", "Cargando...", true);
+                  },
+                  success: function( data ) {
+                    alert(data.message);
+                    if (data.status!='ERROR'){
+                        history.back();  
+                    
+                    }
+
+                  },
+                  error: function(){
+                     navigator.notification.alert(
+                        'Imposible conectar con el Servidor!',  // message
+                        null,         // callback
+                        'Error',            // title
+                        'OK'                  // buttonName
+                    );
+                  },
+
+                  complete: function(){
+                    $.mobile.hidePageLoadingMsg();
+                  }
+                });
+                               
             });
 
             $("#sub").click(function(e) {

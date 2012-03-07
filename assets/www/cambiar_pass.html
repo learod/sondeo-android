@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, minimum-scale=1, maximum-scale=1" />
+        <title>
+        </title>
+        <link rel="stylesheet" href="jquery.mobile/jquery.mobile-1.0.1.min.css" />
+        <style>
+            /* App custom styles */
+        </style><script src="js/phonegap-1.4.1.js">
+        </script>
+        <script src="js/jquery-1.7.1.min.js">
+        </script>
+        <script src="jquery.mobile/jquery.mobile-1.0.1.min.js">
+        </script>
+        <script src="js/config.js">
+        </script>
+    <body>
+        
+        <!-- Pagina de cambio de contraseña -->
+        <div data-role="page" id="cambiar_pass">
+            <div data-theme="a" data-role="header" data-position="fixed">
+                <h3>
+                    Sondeo
+                </h3>
+                <a data-role="button" data-rel="back" data-transition="fade" data-theme="a" data-icon="back" data-iconpos="left">
+                    Atras
+                </a>
+            </div>
+            <div data-role="content">
+                <form url="" action="POST">
+                    
+                    <span>Cambio de Contrase&ntilde;a</span>
+                    <div data-role="fieldcontain">
+                        <fieldset data-role="controlgroup">
+                            <input id="old_password" placeholder="Contrase&ntilde;a" value="" type="password" />
+                            <br />                        
+                            <input id="nb_password" placeholder="Nueva Contrase&ntilde;a" value="" type="password" />
+                            <br />                        
+                            <input id="con_nb_password" placeholder="Repetir Nueva Contrase&ntilde;a" value="" type="password" />
+                        </fieldset>
+                    </div>
+                    <input type="submit" data-inline="true" data-icon="check" data-iconpos="left" value="Guardar" id="g_pass" />
+                </form>
+                <div id="resultBlock"></div>
+            </div>
+            <div data-theme="a" data-role="footer">
+                <div data-role="navbar" data-iconpos="top">
+                    <ul>
+                        <li>
+                            <a href="index.html#bienvenido" data-theme="" data-icon="myhome" data-transition="pop">
+                                Inicio
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" data-theme="" data-icon="grid" data-transition="pop">
+                                Menu
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" data-theme="" data-icon="padlock" class="ui-btn-active">
+                                Contrase&ntilde;a
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" data-theme="" data-icon="tools" class="config" data-transition="pop">
+                                Config.
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <h3>
+                    <span class="nombre"></span>
+                </h3>
+            </div>
+        </div>
+        
+       <script>
+       var storage = window.localStorage;      
+       var login=jQuery.parseJSON(storage.getItem("login")) ;
+       $('#resultBlock').html(storage.getItem("login"));
+
+    
+       function alertDismissed(button) {
+        if (button==1) navigator.app.exitApp();
+            // do something
+            //alert('You selected button ' + button);
+        }
+        
+        function cerrar_session(button) {
+            if (button==1) {
+                storage.clear();
+                navigator.app.exitApp();
+            }
+            // do something
+            //alert('You selected button ' + button);
+        }
+        
+
+
+        function salir () {
+             navigator.notification.confirm(
+                '¿Desea Salir?',  // message
+                 alertDismissed,             // callback to invoke with index of button pressed
+                'Sondeo',            // title
+                'OK,Cancelar'          // buttonLabels
+            );
+        }
+
+        function onEndCallKeyDown(){
+            navigator.notification.confirm(
+                '¿Desea Salir?',  // message
+                 cerrar_session,             // callback to invoke with index of button pressed
+                'Sondeo',            // title
+                'OK,Cancelar'          // buttonLabels
+            );
+        }
+
+        $(document).ready(function() {
+            //alert(storage.getItem('username') +  ' ' + storage.getItem('password'))
+            //document.addEventListener("menubutton", onEndCallKeyDown, false);
+
+            
+            //login=storage.getItem("login")
+            //if(login!='null'){}
+
+
+            $(".config").click(function(e){
+                onEndCallKeyDown();
+            });
+
+            $("#salir").click(function(e){
+                salir();               
+            });
+
+            $("#g_pass").click(function(e){
+                e.preventDefault();
+                var url ="http://"+host+"/users/cambiar_pass.json";    
+                $.ajax({
+                  url: url,
+                  data:{'n_pass':$('#nb_password').val(),'cn_pass':$('#con_nb_password').val(),
+                        'password':$("#old_password").val(),'login':storage.getItem('username'),'id':login.usuario.id},
+                  timeout: 10000,
+                  type:'POST',
+                  beforeSend: function( xhr ) {
+                     $.mobile.showPageLoadingMsg("b", "Cargando...", true);
+                  },
+                  success: function( data ) {
+                    alert(data.message);
+                    if (data.status!='ERROR'){
+                        history.back();  
+                    
+                    }
+
+                  },
+                  error: function(){
+                     navigator.notification.alert(
+                        'Imposible conectar con el Servidor!',  // message
+                        null,         // callback
+                        'Error',            // title
+                        'OK'                  // buttonName
+                    );
+                  },
+
+                  complete: function(){
+                    $.mobile.hidePageLoadingMsg();
+                  }
+                });
+                               
+            });
+
+            
+            
+        });
+        </script>
+    </body>
+</html>
