@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, minimum-scale=1, maximum-scale=1" />
+        <title>
+        </title>
+        <link rel="stylesheet" href="jquery.mobile/jquery.mobile-1.0.1.min.css" />
+        <link rel="stylesheet" href="css/jquery.jqplot.min.css" />
+        <style>
+            /* App custom styles */
+        </style>
+        <script src="js/phonegap-1.4.1.js">
+        </script>
+        <script src="js/jquery-1.7.1.min.js">
+        </script>
+        <script src="jquery.mobile/jquery.mobile-1.0.1.min.js">
+        </script>
+        <script src="js/config.js">
+        </script>
+         <script src="js/jquery.jqplot.min.js">
+        </script>
+        <script src="js/jqplot.pieRenderer.min.js">
+        </script>
+    <body>
+        
+        <!-- Pagina de cambio de contraseña -->
+        <div data-role="page" id="grafico_torta">
+            <div data-theme="a" data-role="header" data-position="fixed">
+                <h3>
+                    Sondeo
+                </h3>
+                <a data-role="button" data-rel="back" data-transition="fade" data-theme="a" data-icon="back" data-iconpos="left">
+                    Atras
+                </a>
+            </div>
+            <div data-role="content">
+                <div id="pie1"></div>
+            </div>
+            <div data-theme="a" data-role="footer">
+                <div data-role="navbar" data-iconpos="top">
+                    <ul>
+                        <li>
+                            <a href="index.html#bienvenido" data-theme="" data-icon="myhome" data-transition="pop">
+                                Inicio
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" data-theme="" data-icon="grid" data-transition="pop">
+                                Menu
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" data-theme="" data-icon="padlock" class="ui-btn-active">
+                                Contrase&ntilde;a
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" data-theme="" data-icon="tools" class="config" data-transition="pop">
+                                Config.
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <h3>
+                    <span class="nombre"></span>
+                </h3>
+            </div>
+        </div>
+        
+       <script>
+       
+
+        pageInit(function (){
+
+            var plot1 = $.jqplot('pie1', [[['PRueba 1',25],['PRueba 2',14],['PRueba 3',7],['PRueba 4',30]]], {
+                gridPadding: {top:0, bottom:38, left:0, right:0},
+                seriesDefaults:{
+                    renderer:$.jqplot.PieRenderer, 
+                    trendline:{ show:false }, 
+                    rendererOptions: { padding: 8, showDataLabels: true }
+                },
+                legend:{
+                    show:true, 
+                    placement: 'outside', 
+                    rendererOptions: {
+                        numberRows: 1
+                    }, 
+                    location:'s',
+                    marginTop: '15px'
+                }       
+            });
+            
+            
+        });
+        </script>
+    </body>
+</html>

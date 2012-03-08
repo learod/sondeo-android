@@ -6,21 +6,33 @@
         <title>
         </title>
         <link rel="stylesheet" href="jquery.mobile/jquery.mobile-1.0.1.min.css" />
-        <link rel="stylesheet" href="css/visualize.css" />
+        <!--link rel="stylesheet" href="css/jquery.jqplot.min.css" />
+        <link href="css/basic.css" type="text/css" rel="stylesheet" /-->
+        <link href="css/visualize.css" type="text/css" rel="stylesheet" />
+        <link href="css/visualize-light.css" type="text/css" rel="stylesheet" />
         <style>
             /* App custom styles */
+            div.graph
+        {
+            width: 230px;
+            height: 230px;
+            float: left;
+            border: 1px dashed gainsboro;
+        }
         </style><script src="js/phonegap-1.4.1.js">
         </script>
+        <script language="javascript" type="text/javascript" src="js/excanvas.js"></script>
         <script src="js/jquery-1.7.1.min.js">
         </script>
         <script src="jquery.mobile/jquery.mobile-1.0.1.min.js">
         </script>
         <script src="js/config.js">
         </script>
-        <script src="js/wz_jsgraphics.js">
+        <script language="javascript" type="text/javascript" src="js/jquery.flot.js"></script>
+        <script language="javascript" type="text/javascript" src="js/jquery.flot.pie.js">
         </script>
-        <script src="js/pie.js">
-        </script>
+        <!--script src="js/pie.js">
+        </script-->
 
     <body>
         <div data-role="page" id="login">
@@ -83,12 +95,8 @@
                 </ul-->
 
 
-               <div id="pieCanvas"></div>
-
-
-
-
-
+                    <div id="default" class="graph"></div>
+                
             </div>
             <div data-theme="a" data-role="footer">
                 <div data-role="navbar" data-iconpos="top">
@@ -181,18 +189,27 @@
         
        <script>
 
-       var p = new pie();
-        p.add("Jan",100);
-        p.add("Feb",200);
-        p.add("Mar",150);
-        p.add("Apr",120);
-        p.add("May",315);
-        p.add("Jun",415);
-        p.add("Jul",315);
-        p.render("pieCanvas", "Pie Graph")
+       // var p = new pie();
+       //  p.add("Jan",100);
+       //  p.add("Feb",200);
+       //  p.add("Mar",150);
+       //  p.add("Apr",120);
+       //  p.add("May",315);
+       //  p.add("Jun",415);
+       //  p.add("Jul",315);
+       //  p.render("pieCanvas", "Pie Graph")
 
        var login=null;
-       var storage = window.localStorage;      
+       var storage = window.localStorage;    
+
+       var data = [
+            { label: "Series1",  data: 10},
+            { label: "Series2",  data: 30},
+            { label: "Series3",  data: 90},
+            { label: "Series4",  data: 70},
+            { label: "Series5",  data: 80},
+            { label: "Series6",  data: 110}
+        ];  
 
        function iniciar_session() {
            var url ="http://"+host+"/iniciar.json?login="+$("#username").val()+"&password="+$("#password").val();    
@@ -267,9 +284,13 @@
         }
 
         $(document).ready(function() {
+
+            
+           
+
             //alert(storage.getItem('username') +  ' ' + storage.getItem('password'))
             //document.addEventListener("menubutton", onEndCallKeyDown, false);
-            $('.pie').hide();
+            //$('.pie').hide();
             // $('.pie').visualize({
             //         type: 'pie',
             //         width: 200,
@@ -281,6 +302,23 @@
             //         //tooltip: true
             //     });
 
+            // var plot1 = $.jqplot('pie1', [[['PRueba 1',25],['PRueba 2',14],['PRueba 3',7],['PRueba 3',30]]], {
+            //     gridPadding: {top:0, bottom:38, left:0, right:0},
+            //     seriesDefaults:{
+            //         renderer:$.jqplot.PieRenderer, 
+            //         trendline:{ show:false }, 
+            //         rendererOptions: { padding: 8, showDataLabels: true }
+            //     },
+            //     legend:{
+            //         show:true, 
+            //         placement: 'outside', 
+            //         rendererOptions: {
+            //             numberRows: 1
+            //         }, 
+            //         location:'s',
+            //         marginTop: '15px'
+            //     }       
+            // });
             if(storage.getItem("username") != null && storage.getItem("password") != null){
                 $('#username').val(storage.getItem("username"));
                 $('#password').val(storage.getItem("password"));
@@ -339,7 +377,27 @@
                 e.preventDefault();
                 iniciar_session();
             });
-            
+
+             $.plot($("#default"), data, 
+            {
+                series: {
+                    pie: { 
+                        show: true,
+                        radius: 1,
+                        label: {
+                            show: true,
+                            radius: 1,
+                            formatter: function(label, series){
+                                return '<div style="font-size:8pt;text-align:center;padding:2px;color:black;">'+label+'<br/>'+Math.round(series.percent)+'%</div>';
+                            },
+                            background: { opacity: 0.8 }
+                        }
+                    }
+                },
+                legend: {
+                    show: false
+                }
+            });
         });
         </script>
     </body>
