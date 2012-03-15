@@ -6,10 +6,7 @@
         <title>
         </title>
         <link rel="stylesheet" href="jquery.mobile/jquery.mobile-1.0.1.min.css" />
-        <!--link rel="stylesheet" href="css/jquery.jqplot.min.css" />
-        <link href="css/basic.css" type="text/css" rel="stylesheet" /-->
-        <link href="css/visualize.css" type="text/css" rel="stylesheet" />
-        <link href="css/visualize-light.css" type="text/css" rel="stylesheet" />
+        
         <style>
             /* App custom styles */
             div.graph
@@ -73,13 +70,23 @@
                 </a>
             </div>
             <div data-role="content">
-                <!--ul data-role="listview" data-divider-theme="b" data-inset="true">
+                <!--table width="100%" height="100%">
+                    <tr>
+                        <td><div style="text-align:center"><img src="images/key.png"><br/>llave</div></td>
+                        <td><div style="text-align:center"><img src="images/key.png"><br/>llave</div></td>
+                    </tr>
+                    <tr>
+                        <td><div style="text-align:center"><img src="images/key.png"><br/>llave</div></td>
+                        <td><div style="text-align:center"><img src="images/key.png"><br/>llave</div></td>
+                    </tr>
+                </table-->
+                <ul data-role="listview" data-divider-theme="b" data-inset="true">
                     <li data-role="list-divider" role="heading">
                         Divider
                     </li>
                     <li data-theme="c">
-                        <a href="#" data-transition="slide">
-                            Button
+                        <a href="#periodos" data-transition="slide" id="periodo_button">
+                            Propuestas Habilitadas
                         </a>
                     </li>
                     <li data-theme="c">
@@ -92,11 +99,11 @@
                             Button
                         </a>
                     </li>
-                </ul-->
+                </ul>
 
-
+                <!-- esto espara los graficos
                     <div id="default" class="graph"></div>
-                
+                -->
             </div>
             <div data-theme="a" data-role="footer">
                 <div data-role="navbar" data-iconpos="top">
@@ -129,6 +136,85 @@
             </div>
         </div>
 
+        <!-- ACA COMIENZA OTRA PAGINA -->
+        <div data-role="page" id="periodos">
+            <div data-theme="a" data-role="header">
+                <h3>
+                    Sondeo
+                </h3>
+                 <a data-role="button" data-rel="back" data-transition="fade" data-theme="a" data-icon="back" data-iconpos="left">
+                    Atr&aacute;s
+                </a>
+            </div>
+            <div data-role="content">
+                <!--table width="100%" height="100%">
+                    <tr>
+                        <td><div style="text-align:center"><img src="images/key.png"><br/>llave</div></td>
+                        <td><div style="text-align:center"><img src="images/key.png"><br/>llave</div></td>
+                    </tr>
+                    <tr>
+                        <td><div style="text-align:center"><img src="images/key.png"><br/>llave</div></td>
+                        <td><div style="text-align:center"><img src="images/key.png"><br/>llave</div></td>
+                    </tr>
+                </table-->
+                <ul data-role="listview" data-divider-theme="b" data-inset="true" id="lista_periodos">
+                    <li data-role="list-divider" role="heading">
+                        Divider
+                    </li>
+                    <li data-theme="c">
+                        <a href="#" data-transition="slide">
+                            Button
+                        </a>
+                    </li>
+                    <li data-theme="c">
+                        <a href="#page1" data-transition="slide">
+                            Button
+                        </a>
+                    </li>
+                    <li data-theme="c">
+                        <a href="#page1" data-transition="slide">
+                            Button
+                        </a>
+                    </li>
+                </ul>
+
+                <!-- esto espara los graficos
+                    <div id="default" class="graph"></div>
+                -->
+            </div>
+            <div data-theme="a" data-role="footer">
+                <div data-role="navbar" data-iconpos="top">
+                    <ul>
+                        <li>
+                            <a href="#bienvenido" data-theme="" data-icon="myhome" class="ui-btn-active">
+                                Inicio
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" data-theme="" data-icon="grid" data-transition="pop">
+                                Menu
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#cambiar_pass" data-theme="" data-icon="padlock" data-transition="pop">
+                                Contrase&ntilde;a
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" data-theme="" data-icon="tools" class="config" data-transition="pop">
+                                Config.
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <h3>
+                    <span class="nombre"></span>
+                </h3>
+            </div>
+        </div>
+
+
+
         <!-- Pagina de cambio de contraseña -->
         <div data-role="page" id="cambiar_pass">
             <div data-theme="a" data-role="header" data-position="fixed">
@@ -136,7 +222,7 @@
                     Sondeo
                 </h3>
                 <a data-role="button" data-rel="back" data-transition="fade" data-theme="a" data-icon="back" data-iconpos="left">
-                    Atras
+                    Atr&aacute;s
                 </a>
             </div>
             <div data-role="content">
@@ -188,28 +274,17 @@
         </div>
         
        <script>
-
-       // var p = new pie();
-       //  p.add("Jan",100);
-       //  p.add("Feb",200);
-       //  p.add("Mar",150);
-       //  p.add("Apr",120);
-       //  p.add("May",315);
-       //  p.add("Jun",415);
-       //  p.add("Jul",315);
-       //  p.render("pieCanvas", "Pie Graph")
-
        var login=null;
        var storage = window.localStorage;    
 
-       var data = [
+       /*var data = [
             { label: "Series1",  data: 10},
             { label: "Series2",  data: 30},
             { label: "Series3",  data: 90},
             { label: "Series4",  data: 70},
             { label: "Series5",  data: 80},
             { label: "Series6",  data: 110}
-        ];  
+        ]; */ 
 
        function iniciar_session() {
            var url ="http://"+host+"/iniciar.json?login="+$("#username").val()+"&password="+$("#password").val();    
@@ -285,40 +360,6 @@
 
         $(document).ready(function() {
 
-            
-           
-
-            //alert(storage.getItem('username') +  ' ' + storage.getItem('password'))
-            //document.addEventListener("menubutton", onEndCallKeyDown, false);
-            //$('.pie').hide();
-            // $('.pie').visualize({
-            //         type: 'pie',
-            //         width: 200,
-            //         appendKey: false,
-            //         appendTitle: false,
-            //         //pieMargin: 10,
-            //         title: '2009 Total Sales by Individual'
-            //         //interaction: true,
-            //         //tooltip: true
-            //     });
-
-            // var plot1 = $.jqplot('pie1', [[['PRueba 1',25],['PRueba 2',14],['PRueba 3',7],['PRueba 3',30]]], {
-            //     gridPadding: {top:0, bottom:38, left:0, right:0},
-            //     seriesDefaults:{
-            //         renderer:$.jqplot.PieRenderer, 
-            //         trendline:{ show:false }, 
-            //         rendererOptions: { padding: 8, showDataLabels: true }
-            //     },
-            //     legend:{
-            //         show:true, 
-            //         placement: 'outside', 
-            //         rendererOptions: {
-            //             numberRows: 1
-            //         }, 
-            //         location:'s',
-            //         marginTop: '15px'
-            //     }       
-            // });
             if(storage.getItem("username") != null && storage.getItem("password") != null){
                 $('#username').val(storage.getItem("username"));
                 $('#password').val(storage.getItem("password"));
@@ -326,7 +367,7 @@
             }
 
             login=storage.getItem("login")
-            //if(login!='null'){}
+
 
 
             $(".config").click(function(e){
@@ -373,12 +414,63 @@
                                
             });
 
+
+            $("#periodo_button").click(function(e){
+                e.preventDefault();
+                var url ="http://"+host+"/ciudadanos/periodos.json?id="+login.ciudadano.id;    
+                $.ajax({
+                  url: url,
+                  //data:{'id':login.usuario.cidadano.id},
+                  timeout: 10000,
+                  type:'get',
+                  beforeSend: function( xhr ) {
+                     $.mobile.showPageLoadingMsg("b", "Cargando...", true);
+                  },
+                  success: function( data ) {
+                    // if (data.status!='ERROR'){
+                    //     alert(data.message);
+                    //     history.back();  
+                    // }else{
+                        //alert(JSON.stringify(data));
+                        $("#lista_periodos").html("");
+                        $("#lista_periodos").append('<li data-role="list-divider" role="heading">Periodos</li>');
+                        $.each(data, function(key,value){
+                            $("#lista_periodos").append(
+                                '<li data-theme="c">'+
+                                // '<li data-theme="c"><a href="#page1" data-transition="slide">'+value.descripcion+'</a></li>'
+                                '<a href="javascript:carga_periodo('+ value.id +');">'+
+                                //$(document.createElement('li')).html(
+                                    value.descripcion +
+                                    //)+
+                                '</a></li>'
+                                );
+                        });
+                        $("#lista_periodos").listview("refresh"); 
+                    // }
+
+                  },
+                  error: function(){
+                     navigator.notification.alert(
+                        'Imposible conectar con el Servidor!',  // message
+                        null,         // callback
+                        'Error',            // title
+                        'OK'                  // buttonName
+                    );
+                  },
+
+                  complete: function(){
+                    $.mobile.hidePageLoadingMsg();
+                  }
+                });
+                               
+            });
+
             $("#sub").click(function(e) {
                 e.preventDefault();
                 iniciar_session();
             });
 
-             $.plot($("#default"), data, 
+             /*$.plot($("#default"), data, 
             {
                 series: {
                     pie: { 
@@ -397,8 +489,14 @@
                 legend: {
                     show: false
                 }
-            });
+            });*/
         });
+
+
+
+        function carga_periodo(id){
+            alert('pulso ' + id);
+        }
         </script>
     </body>
 </html>
