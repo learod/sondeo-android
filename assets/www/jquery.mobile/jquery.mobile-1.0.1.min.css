@@ -13,6 +13,7 @@
 	background-image: url("images/home.png");
 	background-size: 18px 18px;
 }
-[data-role=page]{height: 100% !important; position:relative !important;}
+/*[data-role=page]{height: 100% !important; position:relative !important;}*/
+/*[data-role=page]{height: 100% !important; position:relative !important;}
 [data-role=footer]{bottom:0; position:absolute !important; top: auto !important; width:100%;}
-
+*/

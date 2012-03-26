@@ -22,11 +22,9 @@
 /home/leandro/NetBeansProjects/sondeo/assets/www/js/jquery.mobile-1.0.1.min.js \
 /home/leandro/NetBeansProjects/sondeo/assets/www/js/jquery.flot.pie.js \
 /home/leandro/NetBeansProjects/sondeo/assets/www/js/main.js \
-/home/leandro/NetBeansProjects/sondeo/assets/www/css/visualize-light.css \
 /home/leandro/NetBeansProjects/sondeo/assets/www/css/basic.css \
 /home/leandro/NetBeansProjects/sondeo/assets/www/css/jquery.jqplot.min.css \
 /home/leandro/NetBeansProjects/sondeo/assets/www/css/jquery.mobile-1.0.1.min.css \
-/home/leandro/NetBeansProjects/sondeo/assets/www/css/visualize.css \
 /home/leandro/NetBeansProjects/sondeo/assets/www/jquery.mobile/jquery.mobile-1.0.1.min.js \
 /home/leandro/NetBeansProjects/sondeo/assets/www/jquery.mobile/jquery.mobile.structure-1.0.1.min.css \
 /home/leandro/NetBeansProjects/sondeo/assets/www/jquery.mobile/images \

@@ -16,20 +16,14 @@
             float: left;
             border: 1px dashed gainsboro;
         }
-        </style><script src="js/phonegap-1.4.1.js">
-        </script>
-        <script language="javascript" type="text/javascript" src="js/excanvas.js"></script>
-        <script src="js/jquery-1.7.1.min.js">
-        </script>
-        <script src="jquery.mobile/jquery.mobile-1.0.1.min.js">
-        </script>
-        <script src="js/config.js">
-        </script>
+        </style>
+        <script language="javascript" type="text/javascript" src="js/phonegap-1.4.1.js"></script>
+        <script language="javascript" type="text/javascript" src="js/jquery-1.7.1.min.js"></script>
+        <script language="javascript" type="text/javascript" src="jquery.mobile/jquery.mobile-1.0.1.min.js"></script>
         <script language="javascript" type="text/javascript" src="js/jquery.flot.js"></script>
-        <script language="javascript" type="text/javascript" src="js/jquery.flot.pie.js">
-        </script>
-        <!--script src="js/pie.js">
-        </script-->
+        <script language="javascript" type="text/javascript" src="js/jquery.flot.pie.js"></script>
+        <script language="javascript" type="text/javascript" src="js/config.js"></script>
+        <script language="javascript" type="text/javascript" src="js/main.js"></script>
 
     <body>
         <div data-role="page" id="login">
@@ -59,7 +53,7 @@
             </div>
         </div>
 
-        <!-- ACA COMIENZA OTRA PAGINA -->
+        <!-- ACA COMIENZA LA PAGINA DE BIENVENIDA -->
         <div data-role="page" id="bienvenido">
             <div data-theme="a" data-role="header">
                 <h3>
@@ -70,16 +64,6 @@
                 </a>
             </div>
             <div data-role="content">
-                <!--table width="100%" height="100%">
-                    <tr>
-                        <td><div style="text-align:center"><img src="images/key.png"><br/>llave</div></td>
-                        <td><div style="text-align:center"><img src="images/key.png"><br/>llave</div></td>
-                    </tr>
-                    <tr>
-                        <td><div style="text-align:center"><img src="images/key.png"><br/>llave</div></td>
-                        <td><div style="text-align:center"><img src="images/key.png"><br/>llave</div></td>
-                    </tr>
-                </table-->
                 <ul data-role="listview" data-divider-theme="b" data-inset="true">
                     <li data-role="list-divider" role="heading">
                         Divider
@@ -100,12 +84,8 @@
                         </a>
                     </li>
                 </ul>
-
-                <!-- esto espara los graficos
-                    <div id="default" class="graph"></div>
-                -->
             </div>
-            <div data-theme="a" data-role="footer">
+            <div data-theme="a" data-role="footer" data-position="fixed">
                 <div data-role="navbar" data-iconpos="top">
                     <ul>
                         <li>
@@ -136,7 +116,7 @@
             </div>
         </div>
 
-        <!-- ACA COMIENZA OTRA PAGINA -->
+        <!-- ACA LA PAGINA DE PERIODOS -->
         <div data-role="page" id="periodos">
             <div data-theme="a" data-role="header">
                 <h3>
@@ -147,18 +127,9 @@
                 </a>
             </div>
             <div data-role="content">
-                <!--table width="100%" height="100%">
-                    <tr>
-                        <td><div style="text-align:center"><img src="images/key.png"><br/>llave</div></td>
-                        <td><div style="text-align:center"><img src="images/key.png"><br/>llave</div></td>
-                    </tr>
-                    <tr>
-                        <td><div style="text-align:center"><img src="images/key.png"><br/>llave</div></td>
-                        <td><div style="text-align:center"><img src="images/key.png"><br/>llave</div></td>
-                    </tr>
-                </table-->
+                
                 <ul data-role="listview" data-divider-theme="b" data-inset="true" id="lista_periodos">
-                    <li data-role="list-divider" role="heading">
+                    <!--li data-role="list-divider" role="heading">
                         Divider
                     </li>
                     <li data-theme="c">
@@ -175,14 +146,14 @@
                         <a href="#page1" data-transition="slide">
                             Button
                         </a>
-                    </li>
+                    </li-->
                 </ul>
 
                 <!-- esto espara los graficos
                     <div id="default" class="graph"></div>
                 -->
             </div>
-            <div data-theme="a" data-role="footer">
+            <div data-role="footer" data-id="foo1" data-position="fixed">
                 <div data-role="navbar" data-iconpos="top">
                     <ul>
                         <li>
@@ -242,7 +213,7 @@
                 </form>
                 <div id="resultBlock"></div>
             </div>
-            <div data-theme="a" data-role="footer">
+            <div data-theme="a" data-role="footer" data-position="fixed">
                 <div data-role="navbar" data-iconpos="top">
                     <ul>
                         <li>
@@ -273,230 +244,63 @@
             </div>
         </div>
         
-       <script>
-       var login=null;
-       var storage = window.localStorage;    
-
-       /*var data = [
-            { label: "Series1",  data: 10},
-            { label: "Series2",  data: 30},
-            { label: "Series3",  data: 90},
-            { label: "Series4",  data: 70},
-            { label: "Series5",  data: 80},
-            { label: "Series6",  data: 110}
-        ]; */ 
-
-       function iniciar_session() {
-           var url ="http://"+host+"/iniciar.json?login="+$("#username").val()+"&password="+$("#password").val();    
-                $.ajax({
-                      url: url,
-                      timeout: 10000,
-                      type:'get',
-                      beforeSend: function( xhr ) {
-                         $.mobile.showPageLoadingMsg("b", "Cargando...", true);
-                      },
-                      success: function( data ) {
-                        login=data;
-                        if (login.status!='ERROR'){
-                            $(".nombre").html(login.usuario.name);
-                            storage.setItem("username",$("#username").val());
-                            storage.setItem("password",$("#password").val());
-                            storage.setItem("login",JSON.stringify(login));
-                            $.mobile.changePage( "#bienvenido", { transition: "slideup"} );
-                        }else{
-                            alert(login.message);
-                        }
-
-                      },
-                      error: function(){
-                         navigator.notification.alert(
-                            'Imposible conectar con el Servidor!',  // message
-                            null,         // callback
-                            'Error',            // title
-                            'OK'                  // buttonName
-                        );
-                      },
-
-                      complete: function(){
-                        $.mobile.hidePageLoadingMsg();
-                      }
-                    });
-       }
-
-       function alertDismissed(button) {
-        if (button==1) navigator.app.exitApp();
-            // do something
-            //alert('You selected button ' + button);
-        }
-        
-        function cerrar_session(button) {
-            if (button==1) {
-                storage.clear();
-                navigator.app.exitApp();
-            }
-            // do something
-            //alert('You selected button ' + button);
-        }
-        
 
 
-        function salir () {
-             navigator.notification.confirm(
-                '¿Desea Salir?',  // message
-                 alertDismissed,             // callback to invoke with index of button pressed
-                'Sondeo',            // title
-                'OK,Cancelar'          // buttonLabels
-            );
-        }
-
-        function onEndCallKeyDown(){
-            navigator.notification.confirm(
-                '¿Desea Salir?',  // message
-                 cerrar_session,             // callback to invoke with index of button pressed
-                'Sondeo',            // title
-                'OK,Cancelar'          // buttonLabels
-            );
-        }
-
-        $(document).ready(function() {
-
-            if(storage.getItem("username") != null && storage.getItem("password") != null){
-                $('#username').val(storage.getItem("username"));
-                $('#password').val(storage.getItem("password"));
-                iniciar_session();
-            }
-
-            login=storage.getItem("login")
-
-
-
-            $(".config").click(function(e){
-                onEndCallKeyDown();
-            });
-
-            $("#salir").click(function(e){
-                salir();               
-            });
-
-            $("#g_pass").click(function(e){
-                e.preventDefault();
-                var url ="http://"+host+"/users/cambiar_pass.json";    
-                $.ajax({
-                  url: url,
-                  data:{'n_pass':$('#nb_password').val(),'cn_pass':$('#con_nb_password').val(),
-                        'password':$("#old_password").val(),'login':storage.getItem('username'),'id':login.usuario.id},
-                  timeout: 10000,
-                  type:'POST',
-                  beforeSend: function( xhr ) {
-                     $.mobile.showPageLoadingMsg("b", "Cargando...", true);
-                  },
-                  success: function( data ) {
-                    alert(data.message);
-                    if (data.status!='ERROR'){
-                        history.back();  
+        <div data-role="page" id="nueva_propuesta">
+            <div data-theme="a" data-role="header" data-position="fixed">
+                <h3>
+                    Sondeo
+                </h3>
+                <a data-role="button" data-rel="back" data-transition="fade" data-theme="a" data-icon="back" data-iconpos="left">
+                    Atr&aacute;s
+                </a>
+            </div>
+            <div data-role="content">
+                <form url="" action="POST">
                     
-                    }
+                    <span>Nueva Propuesta</span>
+                    <div data-role="fieldcontain">
+                        <fieldset data-role="controlgroup">
+                            <input id="propuesta" value="" type="text" />
+                        </fieldset>
+                    </div>
+                    <input type="submit" data-inline="true" data-icon="check" data-iconpos="left" value="Guardar" id="g_prop" />
+                </form>
+                <div id="resultBlock"></div>
+            </div>
+            <div data-theme="a" data-role="footer" data-position="fixed">
+                <div data-role="navbar" data-iconpos="top">
+                    <ul>
+                        <li>
+                            <a href="#bienvenido" data-theme="" data-icon="myhome" data-transition="pop">
+                                Inicio
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" data-theme="" data-icon="grid" data-transition="pop">
+                                Menu
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" data-theme="" data-icon="padlock" class="ui-btn-active">
+                                Contrase&ntilde;a
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" data-theme="" data-icon="tools" class="config" data-transition="pop">
+                                Config.
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <h3>
+                    <span class="nombre"></span>
+                </h3>
+            </div>
+        </div>
 
-                  },
-                  error: function(){
-                     navigator.notification.alert(
-                        'Imposible conectar con el Servidor!',  // message
-                        null,         // callback
-                        'Error',            // title
-                        'OK'                  // buttonName
-                    );
-                  },
-
-                  complete: function(){
-                    $.mobile.hidePageLoadingMsg();
-                  }
-                });
-                               
-            });
-
-
-            $("#periodo_button").click(function(e){
-                e.preventDefault();
-                var url ="http://"+host+"/ciudadanos/periodos.json?id="+login.ciudadano.id;    
-                $.ajax({
-                  url: url,
-                  //data:{'id':login.usuario.cidadano.id},
-                  timeout: 10000,
-                  type:'get',
-                  beforeSend: function( xhr ) {
-                     $.mobile.showPageLoadingMsg("b", "Cargando...", true);
-                  },
-                  success: function( data ) {
-                    // if (data.status!='ERROR'){
-                    //     alert(data.message);
-                    //     history.back();  
-                    // }else{
-                        //alert(JSON.stringify(data));
-                        $("#lista_periodos").html("");
-                        $("#lista_periodos").append('<li data-role="list-divider" role="heading">Periodos</li>');
-                        $.each(data, function(key,value){
-                            $("#lista_periodos").append(
-                                '<li data-theme="c">'+
-                                // '<li data-theme="c"><a href="#page1" data-transition="slide">'+value.descripcion+'</a></li>'
-                                '<a href="javascript:carga_periodo('+ value.id +');">'+
-                                //$(document.createElement('li')).html(
-                                    value.descripcion +
-                                    //)+
-                                '</a></li>'
-                                );
-                        });
-                        $("#lista_periodos").listview("refresh"); 
-                    // }
-
-                  },
-                  error: function(){
-                     navigator.notification.alert(
-                        'Imposible conectar con el Servidor!',  // message
-                        null,         // callback
-                        'Error',            // title
-                        'OK'                  // buttonName
-                    );
-                  },
-
-                  complete: function(){
-                    $.mobile.hidePageLoadingMsg();
-                  }
-                });
-                               
-            });
-
-            $("#sub").click(function(e) {
-                e.preventDefault();
-                iniciar_session();
-            });
-
-             /*$.plot($("#default"), data, 
-            {
-                series: {
-                    pie: { 
-                        show: true,
-                        radius: 1,
-                        label: {
-                            show: true,
-                            radius: 1,
-                            formatter: function(label, series){
-                                return '<div style="font-size:8pt;text-align:center;padding:2px;color:black;">'+label+'<br/>'+Math.round(series.percent)+'%</div>';
-                            },
-                            background: { opacity: 0.8 }
-                        }
-                    }
-                },
-                legend: {
-                    show: false
-                }
-            });*/
-        });
-
-
-
-        function carga_periodo(id){
-            alert('pulso ' + id);
-        }
+       <script>
+       
         </script>
     </body>
 </html>
