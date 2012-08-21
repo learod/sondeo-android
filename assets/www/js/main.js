@@ -3,6 +3,15 @@
        var storage = window.localStorage;   
        var periodo_propuesta_id; 
 
+       $( document ).bind( 'mobileinit', function(){
+        $.mobile.loader.prototype.options.text = "Cargando...";
+        $.mobile.loader.prototype.options.textVisible = true;
+        $.mobile.loader.prototype.options.theme = "a";
+        $.mobile.loader.prototype.options.html = "";
+
+      });
+          
+
        /*var data = [
             { label: "Series1",  data: 10},
             { label: "Series2",  data: 30},
@@ -13,11 +22,12 @@
         ]; */ 
 
        function iniciar_session() {
-           var url ="http://"+host+"/iniciar.json?login="+$("#username").val()+"&password="+$("#password").val();    
+           var url ="http://"+host+"/iniciar.json";    
                 $.ajax({
                       url: url,
                       timeout: 10000,
-                      type:'get',
+                      data : {login: $("#username").val(), password: $("#password").val() },
+                      type:'post',
                       beforeSend: function( xhr ) {
                          $.mobile.showPageLoadingMsg("b", "Cargando...", true);
                       },
@@ -28,6 +38,7 @@
                             storage.setItem("username",$("#username").val());
                             storage.setItem("password",$("#password").val());
                             storage.setItem("login",JSON.stringify(login));
+                            //alert(storage.getItem("login"));
                             $.mobile.changePage( "#bienvenido", { transition: "slideup"} );
                         }else{
                             alert(login.message);
@@ -35,7 +46,7 @@
 
                       },
                       error: function(){
-                         navigator.notification.alert(
+                         alert(
                             'Imposible conectar con el Servidor!',  // message
                             null,         // callback
                             'Error',            // title
@@ -145,9 +156,9 @@
                   timeout: 10000,
                   type:'get',
                   beforeSend: function( xhr ) {
-                     $.mobile.showPageLoadingMsg("b", "Cargando...", true);
+                     $.mobile.showPageLoadingMsg("b", {text: 'Cargando...',textVisible: true,theme: 'z',html: ""});
                   },
-                  success: function( data ) {
+                  success: function( data ) { 
                         $("#lista_periodos").html("");
                         $("#lista_periodos").append('<li data-role="list-divider" role="heading">Periodos</li>');
                         $.each(data, function(key,value){
@@ -176,6 +187,144 @@
                   }
                 });            
             });
+            
+
+            $("#anteproyectos_button").click(function  () {
+              //$("#lista_anteproyectos").html("");
+              $('#col_set').html("");
+              var url ="http://"+host+"/ciudadanos/"+login.ciudadano.id+"/anteproyectos.json";
+                  $.ajax({
+                    url: url,
+                    // data: {id: id},
+                    timeout: 10000,
+                    type:'get',
+                    beforeSend: function( xhr ) {
+                       $.mobile.showPageLoadingMsg();
+                    },
+                    success: function( data ) {
+                          //$("#lista_anteproyectos").append('<li data-role="list-divider" role="heading">Anteproyectos</li>');
+                          $.each(data, function(key,value){
+                            $('#col_set').append(
+                              '<div data-role="collapsible" data-inset="false" data-content-theme="c">'+
+                                '<h3>'+ value.nombre +'</h3>'+
+                                '<p>'+value.descripcion+'</p>'+
+                                '<div>'+
+                                '<div class="star" id="proyecto_star_'+value.id+'" rel="'+value.id+'"></div>'+
+                                '<div class="target" id="target_'+ value.id +'" style=" background-color: #F0F0F0; border-radius: 3px; float: left; height: 15px; margin-left: 5px; padding-bottom: 2px; padding-left: 8px; padding-right: 8px; text-align: center; width: 90px; float: left; "></div>'+
+                                '</div>'+
+                                '<br />'+
+                                '<br />'+
+                                //'<ul><li></li></ul>'
+
+                              '</div>');
+                              /*$("#lista_anteproyectos").append(
+                                  //'<li data-theme="c"><a data-url="id='+value.id+'" href="#proyecto&id='+value.id+'">'+
+                                  '<li data-theme="c" id="a_p_'+value.id+'" rel="'+value.id+'" class="a_p">'+
+                                      value.nombre +
+                                  '</a></li>'
+                                  );*/
+                          });
+                          //$("#lista_anteproyectos").listview("refresh");
+
+                          ///ACAAAAAAAAAA
+                          /*$('.a_p').live('vclick', function(event) {
+                            $('#col_set').append('<div data-role="collapsible">'+
+                              '<h3>pppp '+ $(this).attr('id') +'</h3>'+
+                              '<p>Im the collapsible content. By default Im closed, but you can click the header to open me.</p>'+
+                              '</div>');*/
+                            $( "#proyecto" ).trigger( "create" );
+                            $('.star').each(function  () {
+                              $(this).raty({  
+                                cancel     : true,
+                                cancelHint : 'Ninguno',
+                                target     : '#target_'+$(this).attr('rel'),
+                                //score      : $('#eleccion_' + $(this).attr('id') ).val(),  
+                                //hints : hints,
+                                click   : function(score, evt) {
+                                      //registrar_voto(score, $(this).attr('id'));
+                                    }
+                              })
+                              
+                            })
+                            //$( "#col_set" ).collapsible("refresh");
+                            //$.mobile.changePage( "#proyecto", { transition: "slideup"} );
+                              //event.preventDefault();
+                              //alert("i'm running!");
+                          //});
+                          // $("#lista_periodos").after('<a href="#nueva_propuesta" data-role="button" data-iconpos="left" data-icon="plus" id="nueva_pro">Nueva Propuesta</a>');
+                          // $('#nueva_pro').button();
+                      },
+                    error: function(){
+                       navigator.notification.alert(
+                          'Imposible conectar con el Servidor!',  // message
+                          null,         // callback
+                          'Error',            // title
+                          'OK'                  // buttonName
+                      );
+                    },
+
+                    complete: function(){
+                      $.mobile.hidePageLoadingMsg();
+                    }
+                  });
+            })
+
+            $('#proyecto').bind( "pageinit", function( e, data ){
+              // alert();
+            });
+
+
+
+             $("#anteproyectos_button2").click(function(e){
+                e.preventDefault();
+                $("#detalle_proyectos").html("");
+                var url ="http://"+host+"/ciudadanos/"+login.ciudadano.id+"/anteproyectos.json";    
+                $.ajax({
+                  url: url,
+                  timeout: 10000,
+                  type:'get',
+                  beforeSend: function( xhr ) {
+                     $.mobile.showPageLoadingMsg("b", "Cargando...", true);
+                  },
+                  success: function( data ) {
+                       
+                        
+                        $.each(data, function(key,value){
+                           
+                              //'<div data-role="collapsible-set" data-theme="" data-content-theme="">'+
+                              $('#detalle_proyectos').append(
+                                '<div data-role="collapsible" id="proyecto_'+value.id+'" data-collapsed="">'+
+                                      '<h3>'+value.nombre+'</h3>'+
+                                      '<div data-role="fieldcontain">'+
+                                          '<fieldset data-role="controlgroup">'+
+                                              value.descripcion +
+                                          '</fieldset>'+
+                                      '</div>'+
+                                  //'</div>'+
+                              '</div>');
+                        });
+                        
+                       // $("#detalle_proyectos").collapsibleset('refresh');
+                        $.each(data, function(key,value){
+                         $("#proyecto_"+id).collapsible(); 
+                        });
+
+                    },
+                  error: function(){
+                     navigator.notification.alert(
+                        'Imposible conectar con el Servidor!',  // message
+                        null,         // callback
+                        'Error',            // title
+                        'OK'                  // buttonName
+                    );
+                  },
+
+                  complete: function(){
+                    $.mobile.hidePageLoadingMsg();
+                  }
+                });            
+            });
+
 
             $("#sub").click(function(e) {
                 e.preventDefault();
@@ -266,6 +415,7 @@
 
 
         function carga_periodo(id,ley){
+            $("#lista_periodos").html("");
             periodo_propuesta_id=id;
             leyenda=ley;
             var url ="http://"+host+"/periodo_propuestas/propuestas.json?id="+id;    
@@ -274,10 +424,51 @@
                   timeout: 10000,
                   type:'get',
                   beforeSend: function( xhr ) {
+                     $.mobile.showPageLoadingMsg();
+                  },
+                  success: function( data ) {
+                        $("#lista_periodos").append('<li data-role="list-divider" role="heading">'+ley+' </li>');
+                        $.each(data, function(key,value){
+                            $("#lista_periodos").append(
+                                '<li data-theme="c">'+
+                                    value.descripcion +
+                                '</li>'
+                                );
+                        });
+                        $("#lista_periodos").listview("refresh");
+                        $("#lista_periodos").after('<a href="#nueva_propuesta" data-role="button" data-iconpos="left" data-icon="plus" id="nueva_pro">Nueva Propuesta</a>');
+                        $('#nueva_pro').button();
+                    },
+                  error: function(){
+                     navigator.notification.alert(
+                        'Imposible conectar con el Servidor!',  // message
+                        null,         // callback
+                        'Error',            // title
+                        'OK'                  // buttonName
+                    );
+                  },
+
+                  complete: function(){
+                    $.mobile.hidePageLoadingMsg();
+                  }
+                });
+
+        }
+
+        function carga_anteproyecto(id){
+            $("#lista_anteproyectos").html("");
+            periodo_propuesta_id=id;
+            leyenda=ley;
+            var url ="http://"+host+"/ciudadanos/propuesta.json";    
+                $.ajax({
+                  url: url,
+                  data: {id: id},
+                  timeout: 10000,
+                  type:'post',
+                  beforeSend: function( xhr ) {
                      $.mobile.showPageLoadingMsg("b", "Cargando...", true);
                   },
                   success: function( data ) {
-                        $("#lista_periodos").html("");
                         $("#lista_periodos").append('<li data-role="list-divider" role="heading">'+ley+' </li>');
                         $.each(data, function(key,value){
                             $("#lista_periodos").append(
