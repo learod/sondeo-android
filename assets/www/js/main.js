@@ -22,7 +22,10 @@
         ]; */ 
 
        function iniciar_session() {
-           var url ="http://"+host+"/iniciar.json";    
+           if ($("#host").val()!=''){
+            host = $("#host").val();
+           }    
+           var url ="http://"+host+"/iniciar.json";
                 $.ajax({
                       url: url,
                       timeout: 10000,
@@ -101,8 +104,6 @@
 
             login=storage.getItem("login")
 
-
-
             $(".config").click(function(e){
                 onEndCallKeyDown();
             });
@@ -129,7 +130,6 @@
                         history.back();  
                     
                     }
-
                   },
                   error: function(){
                      navigator.notification.alert(
@@ -139,14 +139,12 @@
                         'OK'                  // buttonName
                     );
                   },
-
                   complete: function(){
                     $.mobile.hidePageLoadingMsg();
                   }
                 });
                                
             });
-
 
             $("#periodo_button").click(function(e){
                 e.preventDefault();
@@ -171,7 +169,6 @@
                         });
                         $("#lista_periodos").listview("refresh"); 
                         $('#nueva_pro').remove();
-
                     },
                   error: function(){
                      navigator.notification.alert(
@@ -181,7 +178,48 @@
                         'OK'                  // buttonName
                     );
                   },
+                  complete: function(){
+                    $.mobile.hidePageLoadingMsg();
+                  }
+                });            
+            });
 
+
+          $("#resultado_button").click(function(e){
+                e.preventDefault();
+                var url ="http://"+host+"/ciudadanos/"+login.ciudadano.id+"/elecciones_cerradas.json";    
+                $.ajax({
+                  url: url,
+                  timeout: 10000,
+                  type:'get',
+                  beforeSend: function( xhr ) {
+                     $.mobile.showPageLoadingMsg("b", {text: 'Cargando...',textVisible: true,theme: 'z',html: ""});
+                  },
+                  success: function( data ) { 
+                        $("#elecciones_cerradas").html("");
+                        $("#elecciones_cerradas").append('<li data-role="list-divider" role="heading">Elecciones</li>');
+                        $.each(data, function(key,value){
+                            var dia = value.fecha_fin.split('-')[2];
+                            var mes = value.fecha_fin.split('-')[1];
+                            var anio = value.fecha_fin.split('-')[0];
+                            var fecha= dia + '/' + mes + '/'+ anio;
+                            $("#elecciones_cerradas").append(
+                                '<li data-theme="c">'+
+                                '<a href="javascript:carga_resultado('+ value.id +','+"'"+ value.descripcion +"'"+');">'+
+                                    value.descripcion +"  <font size='-2'> Finalizado:"+ fecha +"</font>"+
+                                '</a></li>'
+                                );
+                        });
+                        $("#elecciones_cerradas").listview("refresh"); 
+                    },
+                  error: function(){
+                     navigator.notification.alert(
+                        'Imposible conectar con el Servidor!',  // message
+                        null,         // callback
+                        'Error',            // title
+                        'OK'                  // buttonName
+                    );
+                  },
                   complete: function(){
                     $.mobile.hidePageLoadingMsg();
                   }
@@ -190,19 +228,17 @@
             
 
             $("#anteproyectos_button").click(function  () {
-              //$("#lista_anteproyectos").html("");
               $('#col_set').html("");
               var url ="http://"+host+"/ciudadanos/"+login.ciudadano.id+"/anteproyectos.json";
                   $.ajax({
                     url: url,
-                    // data: {id: id},
                     timeout: 10000,
                     type:'get',
                     beforeSend: function( xhr ) {
                        $.mobile.showPageLoadingMsg();
                     },
                     success: function( data ) {
-                          //$("#lista_anteproyectos").append('<li data-role="list-divider" role="heading">Anteproyectos</li>');
+                        if(data!=null){
                           $.each(data, function(key,value){
                             $('#col_set').append(
                               '<div data-role="collapsible" data-inset="false" data-content-theme="c">'+
@@ -211,49 +247,36 @@
                                 '<div>'+
                                 '<div class="star" id="proyecto_star_'+value.id+'" rel="'+value.id+'"></div>'+
                                 '<div class="target" id="target_'+ value.id +'" style=" background-color: #F0F0F0; border-radius: 3px; float: left; height: 15px; margin-left: 5px; padding-bottom: 2px; padding-left: 8px; padding-right: 8px; text-align: center; width: 90px; float: left; "></div>'+
+                                '<input id="eleccion_'+ value.id +'" type="hidden" value="'+ value.etiqueta +'" name="eleccion_'+value.id+'">'+
                                 '</div>'+
                                 '<br />'+
                                 '<br />'+
-                                //'<ul><li></li></ul>'
-
                               '</div>');
-                              /*$("#lista_anteproyectos").append(
-                                  //'<li data-theme="c"><a data-url="id='+value.id+'" href="#proyecto&id='+value.id+'">'+
-                                  '<li data-theme="c" id="a_p_'+value.id+'" rel="'+value.id+'" class="a_p">'+
-                                      value.nombre +
-                                  '</a></li>'
-                                  );*/
                           });
-                          //$("#lista_anteproyectos").listview("refresh");
-
-                          ///ACAAAAAAAAAA
-                          /*$('.a_p').live('vclick', function(event) {
-                            $('#col_set').append('<div data-role="collapsible">'+
-                              '<h3>pppp '+ $(this).attr('id') +'</h3>'+
-                              '<p>Im the collapsible content. By default Im closed, but you can click the header to open me.</p>'+
-                              '</div>');*/
                             $( "#proyecto" ).trigger( "create" );
                             $('.star').each(function  () {
                               $(this).raty({  
                                 cancel     : true,
                                 cancelHint : 'Ninguno',
                                 target     : '#target_'+$(this).attr('rel'),
-                                //score      : $('#eleccion_' + $(this).attr('id') ).val(),  
+                                score      : $('#eleccion_' + $(this).attr('rel') ).val(),  
                                 //hints : hints,
                                 click   : function(score, evt) {
-                                      //registrar_voto(score, $(this).attr('id'));
+                                      registrar_voto(score, $(this).attr('rel'));
                                     }
                               })
                               
                             })
-                            //$( "#col_set" ).collapsible("refresh");
-                            //$.mobile.changePage( "#proyecto", { transition: "slideup"} );
-                              //event.preventDefault();
-                              //alert("i'm running!");
-                          //});
-                          // $("#lista_periodos").after('<a href="#nueva_propuesta" data-role="button" data-iconpos="left" data-icon="plus" id="nueva_pro">Nueva Propuesta</a>');
-                          // $('#nueva_pro').button();
-                      },
+                      }else{
+                        $('#col_set').append('<a data-role="button" data-icon="alert" data-theme="e" data-rel="back" data-transition="fade">Ningun Proyecto</a>'
+                              /*'<div data-role="collapsible" data-inset="false" data-content-theme="c">'+
+                                '<h3>Ningun Proyecto</h3>'+
+                                '<p></p>'+
+                                '</div>'*/)
+                        $( "#proyecto" ).trigger( "create" );
+
+                      } 
+                    },
                     error: function(){
                        navigator.notification.alert(
                           'Imposible conectar con el Servidor!',  // message
@@ -267,12 +290,7 @@
                       $.mobile.hidePageLoadingMsg();
                     }
                   });
-            })
-
-            $('#proyecto').bind( "pageinit", function( e, data ){
-              // alert();
             });
-
 
 
              $("#anteproyectos_button2").click(function(e){
@@ -290,8 +308,6 @@
                        
                         
                         $.each(data, function(key,value){
-                           
-                              //'<div data-role="collapsible-set" data-theme="" data-content-theme="">'+
                               $('#detalle_proyectos').append(
                                 '<div data-role="collapsible" id="proyecto_'+value.id+'" data-collapsed="">'+
                                       '<h3>'+value.nombre+'</h3>'+
@@ -300,11 +316,9 @@
                                               value.descripcion +
                                           '</fieldset>'+
                                       '</div>'+
-                                  //'</div>'+
                               '</div>');
                         });
                         
-                       // $("#detalle_proyectos").collapsibleset('refresh');
                         $.each(data, function(key,value){
                          $("#proyecto_"+id).collapsible(); 
                         });
@@ -496,3 +510,88 @@
                 });
 
         }
+
+
+
+function registrar_voto (score,proyecto_id) {
+    jQuery.ajax({
+       type:'post',
+       data: {proyecto_id: proyecto_id, etiqueta: score},
+       //url:'<%= registrar_voto_ciudadano_path(current_user.ciudadano) %>'
+       url:'http://'+host+'/ciudadanos/'+login.ciudadano.id+'/registrar_voto.json'
+     });
+    //alert('score: ' + score + ' proyecto: ' + proyecto_id)
+  }
+
+
+
+function carga_resultado (id,descripcion) {
+  $("#cab_res").after('');
+  jQuery.ajax({
+     type:'get',
+     //url:'<%= registrar_voto_ciudadano_path(current_user.ciudadano) %>'
+     url:'http://'+host+'/periodo_electorales/'+id+'/show_resultados.json',
+     beforeSend: function( xhr ) {
+         $.mobile.showPageLoadingMsg();
+      },
+      success: function( data ) {
+                var salida_owa="";
+                var salida_media="";
+                $.each(data.media.resultados, function  (key,value) {
+                  salida_owa = salida_owa + "<div class=\"ui-grid-a ui-bar-d\">"+
+                    '<div class="ui-block-a" style="font-size:10px;">'+ data.wckowa.nombre_proyectos[key] +'</div>'+
+                    // '<div class="ui-block-b" style="font-size:12px;">'+ 
+                    // '<div class="star" id="wckowa_star_'+key+'" rel="'+Math.round(data.wckowa.resultados[key])+'"></div>'+
+                    // //Math.round(data.wckowa.resultados[key]) +
+                    // '</div>'+
+                    '<div class="ui-block-b" style="font-size:12px;">'+ 
+                    '<div class="star" id="media_star_'+key+'" rel="'+Math.round(data.wckowa.resultados[key])+'"></div>'+
+                    // Math.round(value) +
+                    '</div>'+
+                    //'</div>'+
+                    "</div>";
+
+                    salida_media = salida_media + "<div class=\"ui-grid-a ui-bar-d\">"+
+                    '<div class="ui-block-a" style="font-size:10px;">'+ data.wckowa.nombre_proyectos[key] +'</div>'+
+                    // '<div class="ui-block-b" style="font-size:12px;">'+ 
+                    // '<div class="star" id="wckowa_star_'+key+'" rel="'+Math.round(data.wckowa.resultados[key])+'"></div>'+
+                    // //Math.round(data.wckowa.resultados[key]) +
+                    // '</div>'+
+                    '<div class="ui-block-b" style="font-size:12px;">'+ 
+                    '<div class="star" id="media_star_'+key+'" rel="'+Math.round(value)+'"></div>'+
+                    // Math.round(value) +
+                    '</div>'+
+                    //'</div>'+
+                    "</div>";
+                })
+            $("#cab_res_wckowa").after(salida_owa);
+            $("#cab_res_media").after(salida_media);
+            $.mobile.changePage( "#resultados_page", { transition: "slideup"} );
+            $("#cab_res").trigger('create');
+
+            $('.star').each(function  () {
+                $(this).raty({  
+                  readOnly   : true,
+                  score      : $(this).attr('rel')
+                  
+                })
+                
+              })
+
+            },
+      error: function(){
+         navigator.notification.alert(
+            'Imposible conectar con el Servidor!',  // message
+            null,         // callback
+            'Error',            // title
+            'OK'                  // buttonName
+        );
+      },
+
+      complete: function(){
+        $.mobile.hidePageLoadingMsg();
+      }
+    });
+   
+  
+}

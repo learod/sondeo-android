@@ -2,7 +2,9 @@
 <html>
     <head>
         <meta charset="utf-8" />
-        <meta name="viewport" content="width=device-width, minimum-scale=1, maximum-scale=1" />
+        <!--meta name="viewport" content="width=device-width, minimum-scale=1, maximum-scale=1" /-->
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0;" />
+
         <title>
         </title>
         <link rel="stylesheet" href="jquery.mobile/jquery.mobile-1.0.1.min.css" />
@@ -45,6 +47,9 @@
                             <label for="password">
                             </label>
                             <input id="password" placeholder="Password" value="" type="password" />
+                            <label for="password">
+                            </label>
+                            <input id="host" placeholder="Host" value="" type="text" />
                         </fieldset>
                     </div>
                     <input type="submit" data-inline="true" data-icon="plus" data-iconpos="left" value="Login" id="sub" />
@@ -64,46 +69,27 @@
                 </a>
             </div>
             <div data-role="content">
-            <!--
-                <ul data-role="listview" data-divider-theme="b" data-inset="true">
-                    <li data-role="list-divider" role="heading">
-                        Divider
-                    </li>
-                    <li data-theme="c">
-                        <a href="#periodos" data-transition="slide" id="periodo_button">
-                            Propuestas Habilitadas
-                        </a>
-                    </li>
-                    <li data-theme="c">
-                        <a href="#page1" data-transition="slide">
-                            Button
-                        </a>
-                    </li>
-                    <li data-theme="c">
-                        <a href="#page1" data-transition="slide">
-                            Button
-                        </a>
-                    </li>
-                </ul>
-            -->
+           
                 <div class="ui-grid-a codiqa-control moveable codiqa-container" data-cid="grid2" style="">
                   <div data-cid="gridblock3" class="codiqa-control codiqa-container ui-block-a">
                       <div style="width: 100%; height: 100%; position: relative;" data-cid="image3" class="codiqa-control">
                         <a href="#periodos" data-transition="slide" id="periodo_button">
-                            <img style="width: 100%;" src="images/nombre.png" alt="image">
+                            <img style="width: 100%;" src="images/propuesta-icon.png" alt="image">
                         </a>
                       </div>
                   </div>
                   <div data-cid="gridblock4" class="codiqa-control codiqa-container ui-block-b">
                      <div style="width: 100%; height: 100%; position: relative;" data-cid="image3" class="codiqa-control">
                         <a href="#proyecto" data-transition="slide" id="anteproyectos_button">
-                            <img style="width: 100%;" src="images/nombre.png" alt="image">
+                            <img style="width: 100%;" src="images/proyecto-icon.png" alt="image">
                         </a>
                       </div>
                   </div>
                   <div data-cid="gridblock5" class="codiqa-control codiqa-container ui-block-a">
                      <div style="width: 100%; height: 100%; position: relative;" data-cid="image3" class="codiqa-control">
-                            <!-- <img src="images/add.png" alt="image"> -->
+                        <a href="#eleccion" data-transition="slide" id="resultado_button">
+                            <img style="width: 100%;" src="images/resultados-icon.png" alt="image">
+                        </a>
                       </div>
                   </div>
                   <div data-cid="gridblock6" class="codiqa-control codiqa-container ui-block-b">
@@ -157,35 +143,16 @@
             <div data-role="content">
                 
                 <ul data-role="listview" data-divider-theme="b" data-inset="true" id="lista_periodos">
-                    <!--li data-role="list-divider" role="heading">
-                        Divider
-                    </li>
-                    <li data-theme="c">
-                        <a href="#" data-transition="slide">
-                            Button
-                        </a>
-                    </li>
-                    <li data-theme="c">
-                        <a href="#page1" data-transition="slide">
-                            Button
-                        </a>
-                    </li>
-                    <li data-theme="c">
-                        <a href="#page1" data-transition="slide">
-                            Button
-                        </a>
-                    </li-->
+                    
                 </ul>
 
-                <!-- esto espara los graficos
-                    <div id="default" class="graph"></div>
-                -->
+                
             </div>
             <div data-role="footer" data-id="foo1" data-position="fixed">
                 <div data-role="navbar" data-iconpos="top">
                     <ul>
                         <li>
-                            <a href="#bienvenido" data-theme="" data-icon="myhome" class="ui-btn-active">
+                            <a href="#bienvenido" data-theme="" data-icon="myhome">
                                 Inicio
                             </a>
                         </li>
@@ -225,40 +192,12 @@
             </div>
             <div data-role="content">
 
-                <!-- div data-role="collapsible-set" id="col_set">
-                   
-                </div -->
-                
-                <!--ul data-role="listview" data-divider-theme="b" data-inset="true" id="lista_anteproyectos">
-                    <li data-role="list-divider" role="heading">
-                        Divider
-                    </li>
-                    <li data-theme="c">
-                        <a href="#" data-transition="slide">
-                            Button
-                        </a>
-                    </li>
-                    <li data-theme="c">
-                        <a href="#page1" data-transition="slide">
-                            Button
-                        </a>
-                    </li>
-                    <li data-theme="c">
-                        <a href="#page1" data-transition="slide">
-                            Button
-                        </a>
-                    </li>
-                </ul-->
-
-                <!-- esto espara los graficos
-                    <div id="default" class="graph"></div>
-                -->
             </div>
             <div data-role="footer" data-id="foo1" data-position="fixed">
                 <div data-role="navbar" data-iconpos="top">
                     <ul>
                         <li>
-                            <a href="#bienvenido" data-theme="" data-icon="myhome" class="ui-btn-active">
+                            <a href="#bienvenido" data-theme="" data-icon="myhome">
                                 Inicio
                             </a>
                         </li>
@@ -298,10 +237,7 @@
             </div>
             <div data-role="content" id="coll">
                 <div data-role="collapsible-set" id="col_set">
-                    <!--div data-role="collapsible">
-                        <h3><div id="nombre_proyecto"></div></h3>
-                       <p>I'm the collapsible content. By default I'm closed, but you can click the header to open me.</p>
-                    </div-->
+                    
                 </div>
 
                
@@ -310,7 +246,115 @@
                 <div data-role="navbar" data-iconpos="top">
                     <ul>
                         <li>
-                            <a href="#bienvenido" data-theme="" data-icon="myhome" class="ui-btn-active">
+                            <a href="#bienvenido" data-theme="" data-icon="myhome">
+                                Inicio
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" data-theme="" data-icon="grid" data-transition="pop">
+                                Menu
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#cambiar_pass" data-theme="" data-icon="padlock" data-transition="pop">
+                                Contrase&ntilde;a
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" data-theme="" data-icon="tools" class="config" data-transition="pop">
+                                Config.
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <h3>
+                    <span class="nombre"></span>
+                </h3>
+            </div>
+        </div>
+
+
+         <!-- ACA LA PAGINA DE Eleeciones cerradas -->
+        <div data-role="page" id="eleccion">
+            <div data-theme="a" data-role="header">
+                <h3>
+                    Sondeo
+                </h3>
+                 <a data-role="button" data-rel="back" data-transition="fade" data-theme="a" data-icon="back" data-iconpos="left">
+                    Atr&aacute;s
+                </a>
+            </div>
+            <div data-role="content">
+                <ul data-role="listview" data-divider-theme="b" data-inset="true" id="elecciones_cerradas">
+                    
+                </ul>
+
+            </div>
+            <div data-role="footer" data-id="foo1" data-position="fixed">
+                <div data-role="navbar" data-iconpos="top">
+                    <ul>
+                        <li>
+                            <a href="#bienvenido" data-theme="" data-icon="myhome">
+                                Inicio
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" data-theme="" data-icon="grid" data-transition="pop">
+                                Menu
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#cambiar_pass" data-theme="" data-icon="padlock" data-transition="pop">
+                                Contrase&ntilde;a
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" data-theme="" data-icon="tools" class="config" data-transition="pop">
+                                Config.
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <h3>
+                    <span class="nombre"></span>
+                </h3>
+            </div>
+        </div>
+
+
+         <!-- ACA LA PAGINA DE Eleeciones cerradas -->
+        <div data-role="page" id="resultados_page">
+            <div data-theme="a" data-role="header">
+                <h3>
+                    Sondeo
+                </h3>
+                 <a data-role="button" data-rel="back" data-transition="fade" data-theme="a" data-icon="back" data-iconpos="left">
+                    Atr&aacute;s
+                </a>
+            </div>
+            <div data-role="content">
+                <div class="ui-grid-solo">
+                    <div class="ui-block-a">Resultados WCKOWA</div>
+                </div>
+                <div class="ui-grid-a ui-bar-b" id="cab_res_wckowa">
+                    <div class="ui-block-a" style="font-size:12px;">Anteproyecto</div>
+                    <div class="ui-block-b" style="font-size:12px;">WCK-OWA</div>
+                </div>
+
+
+                <div class="ui-grid-solo">
+                    <div class="ui-block-a">Resultados Media</div>
+                </div>
+                <div class="ui-grid-a ui-bar-b" id="cab_res_media">
+                    <div class="ui-block-a" style="font-size:12px;">Anteproyecto</div>
+                    <div class="ui-block-b" style="font-size:12px;">Media</div>
+                </div>
+            </div>
+            <div data-role="footer" data-id="foo1" data-position="fixed">
+                <div data-role="navbar" data-iconpos="top">
+                    <ul>
+                        <li>
+                            <a href="#bienvenido" data-theme="" data-icon="myhome">
                                 Inicio
                             </a>
                         </li>
@@ -452,9 +496,5 @@
                 </h3>
             </div>
         </div>
-
-       <script>
-       
-        </script>
     </body>
 </html>
