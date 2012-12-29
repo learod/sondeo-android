@@ -7,4 +7,4 @@
 /home/leandro/NetBeansProjects/sondeo/res/values/strings.xml \
 /home/leandro/NetBeansProjects/sondeo/bin/res/drawable/icono_encuesta.png \
 /home/leandro/NetBeansProjects/sondeo/bin/res/drawable/sondeo.png \
-/home/leandro/NetBeansProjects/sondeo/AndroidManifest.xml \
+/home/leandro/NetBeansProjects/sondeo/bin/AndroidManifest.xml \
