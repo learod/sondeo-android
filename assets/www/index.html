@@ -49,7 +49,7 @@
                             <input id="password" placeholder="Password" value="" type="password" />
                             <label for="password">
                             </label>
-                            <input id="host" placeholder="Host" value="" type="text" />
+                            <input id="host" placeholder="Host" value="" type="hidden" />
                         </fieldset>
                     </div>
                     <input type="submit" data-inline="true" data-icon="plus" data-iconpos="left" value="Login" id="sub" />
@@ -108,8 +108,68 @@
                             </a>
                         </li>
                         <li>
-                            <a href="#" data-theme="" data-icon="grid" data-transition="pop">
-                                Menu
+                            <a href="#cambiar_pass" data-theme="" data-icon="padlock" data-transition="pop">
+                                Contrase&ntilde;a
+                            </a>
+                        </li>
+                        <li>
+                            <a data-theme="" data-icon="info" class="config" href="#informacion" data-transition="pop">
+                                Info
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <h3>
+                    <span class="nombre"></span>
+                </h3>
+            </div>
+        </div>
+
+        <!-- ACA COMIENZA LA PAGINA DE INFORMACION -->
+        <div data-role="page" id="informacion">
+            <div data-theme="a" data-role="header">
+                <h3>
+                    Sondeo
+                </h3>
+                <a data-role="button" data-rel="back" data-transition="fade" data-theme="a" data-icon="back" data-iconpos="left">
+                    Atr&aacute;s
+                </a>
+            </div>
+            <div data-role="content">
+                <center>
+                    <h2>Informaci&oacute;n del Cuidadano</h2>
+                </center>        
+                <div>
+                    <h3>Nombre:</h3>
+                    &nbsp;<span id="info_nombre">Juan</span>
+                </div>   
+                <div>
+                    <h3>Apellido:</h3>
+                    &nbsp;<span id="info_apellido">Perez</span>
+                </div> 
+                <div>
+                    <h3>Municipio:</h3>
+                    &nbsp;<span id="info_municipio">Corrientes</span>
+                </div>
+                <div>
+                    <h3>Barrio:</h3>
+                    &nbsp;<span id="info_barrio">Centro</span>
+                </div>  
+
+                <div>
+                    <h3>Barrio:</h3>
+                    &nbsp;<span id="info_barrio">Centro</span>
+                </div>  
+                <a data-role="button" id="desconectarse" href="#" data-icon="delete" data-iconpos="left">
+                    Desconectarse
+                </a>
+            </div>
+            <div data-theme="a" data-role="footer" data-position="fixed">
+                <div data-role="navbar" data-iconpos="top">
+                    <ul>
+                        <li>
+                            <a href="#bienvenido" data-theme="" data-icon="myhome" class="ui-btn-active">
+                                Inicio
                             </a>
                         </li>
                         <li>
@@ -118,8 +178,8 @@
                             </a>
                         </li>
                         <li>
-                            <a href="#" data-theme="" data-icon="tools" class="config" data-transition="pop">
-                                Config.
+                            <a data-theme="" data-icon="info" class="config" href="#informacion" data-transition="pop">
+                                Info
                             </a>
                         </li>
                     </ul>
@@ -157,18 +217,13 @@
                             </a>
                         </li>
                         <li>
-                            <a href="#" data-theme="" data-icon="grid" data-transition="pop">
-                                Menu
-                            </a>
-                        </li>
-                        <li>
                             <a href="#cambiar_pass" data-theme="" data-icon="padlock" data-transition="pop">
                                 Contrase&ntilde;a
                             </a>
                         </li>
                         <li>
-                            <a href="#" data-theme="" data-icon="tools" class="config" data-transition="pop">
-                                Config.
+                            <a data-theme="" data-icon="info" class="config" href="#informacion" data-transition="pop">
+                                Info
                             </a>
                         </li>
                     </ul>
@@ -202,18 +257,13 @@
                             </a>
                         </li>
                         <li>
-                            <a href="#" data-theme="" data-icon="grid" data-transition="pop">
-                                Menu
-                            </a>
-                        </li>
-                        <li>
                             <a href="#cambiar_pass" data-theme="" data-icon="padlock" data-transition="pop">
                                 Contrase&ntilde;a
                             </a>
                         </li>
                         <li>
-                            <a href="#" data-theme="" data-icon="tools" class="config" data-transition="pop">
-                                Config.
+                            <a data-theme="" data-icon="info" class="config" href="#informacion" data-transition="pop">
+                                Info
                             </a>
                         </li>
                     </ul>
@@ -251,18 +301,13 @@
                             </a>
                         </li>
                         <li>
-                            <a href="#" data-theme="" data-icon="grid" data-transition="pop">
-                                Menu
-                            </a>
-                        </li>
-                        <li>
                             <a href="#cambiar_pass" data-theme="" data-icon="padlock" data-transition="pop">
                                 Contrase&ntilde;a
                             </a>
                         </li>
                         <li>
-                            <a href="#" data-theme="" data-icon="tools" class="config" data-transition="pop">
-                                Config.
+                            <a data-theme="" data-icon="info" class="config" href="#informacion" data-transition="pop">
+                                Info
                             </a>
                         </li>
                     </ul>
@@ -299,18 +344,13 @@
                             </a>
                         </li>
                         <li>
-                            <a href="#" data-theme="" data-icon="grid" data-transition="pop">
-                                Menu
-                            </a>
-                        </li>
-                        <li>
                             <a href="#cambiar_pass" data-theme="" data-icon="padlock" data-transition="pop">
                                 Contrase&ntilde;a
                             </a>
                         </li>
                         <li>
-                            <a href="#" data-theme="" data-icon="tools" class="config" data-transition="pop">
-                                Config.
+                            <a data-theme="" data-icon="info" class="config" href="#informacion" data-transition="pop">
+                                Info
                             </a>
                         </li>
                     </ul>
@@ -359,18 +399,13 @@
                             </a>
                         </li>
                         <li>
-                            <a href="#" data-theme="" data-icon="grid" data-transition="pop">
-                                Menu
-                            </a>
-                        </li>
-                        <li>
                             <a href="#cambiar_pass" data-theme="" data-icon="padlock" data-transition="pop">
                                 Contrase&ntilde;a
                             </a>
                         </li>
                         <li>
-                            <a href="#" data-theme="" data-icon="tools" class="config" data-transition="pop">
-                                Config.
+                            <a data-theme="" data-icon="info" class="config" href="#informacion" data-transition="pop">
+                                Info
                             </a>
                         </li>
                     </ul>
@@ -420,18 +455,13 @@
                             </a>
                         </li>
                         <li>
-                            <a href="#" data-theme="" data-icon="grid" data-transition="pop">
-                                Menu
-                            </a>
-                        </li>
-                        <li>
                             <a href="#" data-theme="" data-icon="padlock" class="ui-btn-active">
                                 Contrase&ntilde;a
                             </a>
                         </li>
                         <li>
-                            <a href="#" data-theme="" data-icon="tools" class="config" data-transition="pop">
-                                Config.
+                            <a data-theme="" data-icon="info" class="config" href="#informacion" data-transition="pop">
+                                Info
                             </a>
                         </li>
                     </ul>
@@ -475,18 +505,13 @@
                             </a>
                         </li>
                         <li>
-                            <a href="#" data-theme="" data-icon="grid" data-transition="pop">
-                                Menu
-                            </a>
-                        </li>
-                        <li>
                             <a href="#" data-theme="" data-icon="padlock" class="ui-btn-active">
                                 Contrase&ntilde;a
                             </a>
                         </li>
                         <li>
-                            <a href="#" data-theme="" data-icon="tools" class="config" data-transition="pop">
-                                Config.
+                            <a data-theme="" data-icon="info" class="config" href="#informacion" data-transition="pop">
+                                Info
                             </a>
                         </li>
                     </ul>

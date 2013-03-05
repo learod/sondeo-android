@@ -28,7 +28,7 @@
            var url ="http://"+host+"/iniciar.json";
                 $.ajax({
                       url: url,
-                      timeout: 10000,
+                      timeout: 20000,
                       data : {login: $("#username").val(), password: $("#password").val() },
                       type:'post',
                       beforeSend: function( xhr ) {
@@ -37,7 +37,11 @@
                       success: function( data ) {
                         login=data;
                         if (login.status!='ERROR'){
-                            $(".nombre").html(login.usuario.name);
+                            $(".nombre").html(login.ciudadano.apellido + ", "+ login.ciudadano.nombre);
+                            $("#info_nombre").html(login.ciudadano.nombre);
+                            $("#info_apellido").html(login.ciudadano.apellido);
+                            $("#info_barrio").html(login.ciudadano.barrio);
+                            $("#info_municipio").html(login.ciudadano.municipio);
                             storage.setItem("username",$("#username").val());
                             storage.setItem("password",$("#password").val());
                             storage.setItem("login",JSON.stringify(login));
@@ -104,7 +108,8 @@
 
             login=storage.getItem("login")
 
-            $(".config").click(function(e){
+
+            $("#desconectarse").click(function(e){
                 onEndCallKeyDown();
             });
 

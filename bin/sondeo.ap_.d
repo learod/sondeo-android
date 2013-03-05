@@ -81,4 +81,4 @@
 /home/leandro/NetBeansProjects/sondeo/assets/www/images/raty/star-on.png \
 /home/leandro/NetBeansProjects/sondeo/assets/www/images/raty/star-half.png \
 /home/leandro/NetBeansProjects/sondeo/assets/www/images/raty/star-off.png \
-/home/leandro/NetBeansProjects/sondeo/bin/AndroidManifest.xml \
+/home/leandro/NetBeansProjects/sondeo/AndroidManifest.xml \
